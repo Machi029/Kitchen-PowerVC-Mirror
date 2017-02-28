@@ -212,52 +212,44 @@ to be set to `true`.
 
 ### <a name="config-block_device_mapping"></a> block\_device\_mapping
 
-#### make\_volume
-
-Makes a new volume when set to `true`.
-
-The default is `false`.
-
-#### snapshot\_id
-
-When set, will make a volume from that snapshot id.
-
-#### volume\_id
-
-When set, will attach the volume id.
-
-#### device\_name
-
-Set this to `vda` unless you really know what you are doing.
-
-#### availability\_zone
-
-The block storage availability zone.
-
-The default is `nova`.
-
-#### volume\_type
-
-The volume type, this is optional.
-
-#### delete\_on\_termination
-
-This will delete the volume on the instance when `destroy` happens, if set to true.
-Otherwise set this to `false`.
-
-#### creation\_timeout
-Timeout to wait for volume to become available.  If a large volume is provisioned, it might take time to provision it on the backend.  Maximum amount of time to wait for volume to be created and be available.
+Use [block device mapping v2](https://docs.openstack.org/developer/nova/block_device_mapping.html#block-device-mapping-v2) to add disk to your instance.
+Addtionally for PowerVC multiple instance can reference the same "uuid" of the volume, since PowerVC allows share volumes. 
 
 #### Example
 
 ```yaml
-block_device_mapping:
-  make_volume: true
-  snapshot_id: 00000-111111-0000222-000
-  device_name: vda
-  availability_zone: nova
-  delete_on_termination: false
-  creation_timeout: 120
+ platforms:
+   - name: aix71
+     driver_config:
+       image_ref: "AIX 7.1 TL3 SP1"
+       fixed_ip: "2.2.2.2"
+       block_device_mapping:
+         - boot_index: 1
+           delete_on_termination: false
+           destination_type: "volume"
+           source_type: "volume"
+           uuid: "6188a36b-dab2-4091-a4f5-49d7d33cbef9"
+         - boot_index: 2
+           delete_on_termination: false 
+           destination_type: "volume"
+           source_type: "volume"
+           uuid: "d1abf333-f1b3-4d52-9440-465d4d0b855d"
+   - name: aix712
+     driver_config:
+       image_ref: "AIX 7.1 TL3 SP1"
+       fixed_ip: "2.2.2.3"
+       block_device_mapping:
+         - boot_index: 1
+           delete_on_termination: false
+           destination_type: "volume"
+           source_type: "volume"
+           uuid: "6188a36b-dab2-4091-a4f5-49d7d33cbef9"
+         - boot_index: 2
+           delete_on_termination: false
+           destination_type: "volume"
+           source_type: "volume"
+           uuid: "d1abf333-f1b3-4d52-9440-465d4d0b855d"
+
 ```
 
 ## Network and Communication Configuration
