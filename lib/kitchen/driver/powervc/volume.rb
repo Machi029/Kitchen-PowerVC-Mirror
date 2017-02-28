@@ -21,7 +21,7 @@ require 'kitchen'
 
 module Kitchen
   module Driver
-    class Openstack < Kitchen::Driver::Base
+    class Powervc < Kitchen::Driver::Base
       # A class to allow the Kitchen Openstack driver
       # to use Openstack volumes
       #
@@ -75,9 +75,9 @@ module Kitchen
 
         def get_bdm(config, os)
           bdm = config[:block_device_mapping]
-          bdm[:volume_id] = create_volume(config, os) if bdm[:make_volume]
-          bdm.delete_if { |k, _| k == :make_volume }
-          bdm.delete_if { |k, _| k == :snapshot_id }
+          #bdm[:volume_id] = create_volume(config, os) if bdm[:make_volume]
+          #bdm.delete_if { |k, _| k == :make_volume }
+          #bdm.delete_if { |k, _| k == :snapshot_id }
           bdm
         end
       end

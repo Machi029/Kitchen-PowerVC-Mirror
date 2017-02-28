@@ -185,7 +185,7 @@ module Kitchen
         end
 
         if config[:block_device_mapping]
-          server_def[:block_device_mapping] = get_bdm(config)
+          server_def[:block_device_mapping_v2] = get_bdm(config)
         end
 
         [
